@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "compile": "tsc",
+    "start": "npm run compile && node dst/index.js"
   },
   "repository": {
     "type": "git",
@@ -17,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/karlsonru/FileManager/issues"
   },
-  "homepage": "https://github.com/karlsonru/FileManager#readme"
+  "homepage": "https://github.com/karlsonru/FileManager#readme",
+  "dependencies": {
+    "typescript": "^4.9.3"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.11"
+  }
 }

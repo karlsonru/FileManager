@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "outDir": "dst",
+    "alwaysStrict": true,
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "watchOptions": {
+    "watchFile": "useFsEvents"
+  },
+  "include": ["./**/*.ts"]
+}
