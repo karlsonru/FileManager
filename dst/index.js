@@ -13,7 +13,7 @@ function getUsername() {
     return username || 'Anonymous';
 }
 function currentPath() {
-    let currentPath = path.normalize(os.homedir());
+    let currentPath = path.normalize(os.homedir()); //.toString();
     return {
         setCurrentPath: (path) => currentPath = path,
         getCurrentPath: () => currentPath,
@@ -48,24 +48,37 @@ async function executeCommand(input) {
                 if (!args) {
                     throw new Error('Arguments missing');
                 }
-                console.log('args: ', args);
                 const normalizedPath = path.normalize(args).trim();
                 const isAbsolute = path.isAbsolute(normalizedPath);
-                console.log('normalizedPath: ', normalizedPath);
                 const nextPath = isAbsolute ? normalizedPath : path.join(CURRENT_PATH.getCurrentPath(), normalizedPath);
-                console.log('nextPath: ', nextPath);
-                const isExistingPath = await pathExists(normalizedPath);
-                console.log('isExistingPath: ', isExistingPath);
+                const isExistingPath = await pathExists(nextPath);
                 if (!isExistingPath)
                     throw new Error('Path doesn\'t exists');
+                if (isAbsolute && !nextPath.includes(START_PATH)) {
+                    throw new Error('Can\'t change home directory');
+                }
                 CURRENT_PATH.setCurrentPath(nextPath);
             })(args);
             break;
         case 'ls': // Print in console list of all files and folders in current directory. List should contain:
+            await (async () => {
+                const files = await fsPromises.readdir(CURRENT_PATH.getCurrentPath(), { withFileTypes: true });
+                const sortedFiles = files.map((file) => ({ name: file.name, type: file.isFile() ? 'file' : 'directory' }))
+                    .sort((objA, objB) => {
+                    if (objA.type === objB.type) {
+                        return objA.name.localeCompare(objB.name);
+                    }
+                    else {
+                        return objA.type.localeCompare(objB.type);
+                    }
+                });
+                console.table(sortedFiles);
+            })();
         default:
             throw new Error('Unknown command');
     }
 }
+;
 function run() {
     const username = getUsername();
     console.log(`Welcome to the File Manager, ${username}!`);
