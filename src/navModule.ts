@@ -1,12 +1,9 @@
 import path from 'path';
 import os from 'os';
 import fsPromises from 'node:fs/promises';
+import { pathExists } from './pathModule.js';
 
 const START_PATH = os.homedir();
-
-export async function pathExists(path: string) {
-  return fsPromises.access(path).then(() => true, () => false);
-};
 
 export function moveUp(currentPath: string, setPath: (path: string) => void) {
   if (currentPath === START_PATH) {
@@ -37,10 +34,10 @@ export async function moveTo(currentPath: string, setPath: (path: string) => voi
     setPath(nextPath);
 }
 
-export async function listFiles(path: string) {
-  const files = await fsPromises.readdir(path, { withFileTypes: true });
+export async function listFiles(dirPath: string) {
+  const files = await fsPromises.readdir(dirPath, { withFileTypes: true });
   const sortedFiles = files.map(
-    (file) => ({ name: file.name, type: file.isFile() ? 'file': 'directory' }))
+    (dirent) => ( { name: dirent.name, type: dirent.isFile() ? 'file' : 'directory'  } ))
     .sort((objA, objB) => {
       if (objA.type === objB.type) {
         return objA.name.localeCompare(objB.name);
