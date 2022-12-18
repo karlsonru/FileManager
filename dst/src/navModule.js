@@ -9,7 +9,8 @@ export function moveUp(currentPath, setPath) {
     if (currentPath === START_PATH) {
         console.log('Can\'t go upper');
         return;
-    } else {
+    }
+    else {
         setPath(path.dirname(currentPath));
     }
 };
@@ -24,28 +25,26 @@ export async function moveTo(currentPath, setPath, args) {
     const nextPath = isAbsolute ? normalizedPath : path.join(currentPath, normalizedPath);
     const isExistingPath = await pathExists(nextPath);
 
-    if (!isExistingPath) {
+    if (!isExistingPath)
         throw new Error('Path doesn\'t exists');
-    }
 
     if (isAbsolute && !nextPath.includes(START_PATH)) {
         throw new Error('Can\'t change home directory');
     }
 
     setPath(nextPath);
-};
+}
 
-export async function listFiles(path) {
-    const files = await fsPromises.readdir(path, { withFileTypes: true });
-
-    const sortedFiles = files.map((file) => ({ name: file.name, type: file.isFile() ? 'file' : 'directory' }))
+export async function listFiles(dirPath) {
+    const files = await fsPromises.readdir(dirPath, { withFileTypes: true });
+    const sortedFiles = files.map((dirent) => ({ name: dirent.name, type: dirent.isFile() ? 'file' : 'directory' }))
         .sort((objA, objB) => {
         if (objA.type === objB.type) {
             return objA.name.localeCompare(objB.name);
-        } else {
+        }
+        else {
             return objA.type.localeCompare(objB.type);
         }
     });
-
     console.table(sortedFiles);
 };

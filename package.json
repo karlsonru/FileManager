@@ -6,9 +6,7 @@
   "main": "dst/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "tsc",
-    "dev": "nodemon --experimental-specifier-resolution=ts-node ./index.ts",
-    "start": "npm run compile && ts-node dst/index.js"
+    "start": "node dst/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,13 +17,5 @@
   "bugs": {
     "url": "https://github.com/karlsonru/FileManager/issues"
   },
-  "homepage": "https://github.com/karlsonru/FileManager#readme",
-  "dependencies": {
-    "typescript": "^4.9.3"
-  },
-  "devDependencies": {
-    "@types/node": "^18.11.11",
-    "nodemon": "^2.0.20",
-    "ts-node": "^10.9.1"
-  }
+  "homepage": "https://github.com/karlsonru/FileManager#readme"
 }
