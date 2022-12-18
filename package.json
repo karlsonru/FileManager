@@ -1,0 +1,21 @@
+{
+  "name": "filemanager",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignments/file-manager/assignment.md",
+  "main": "dst/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dst/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karlsonru/FileManager.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/karlsonru/FileManager/issues"
+  },
+  "homepage": "https://github.com/karlsonru/FileManager#readme"
+}
